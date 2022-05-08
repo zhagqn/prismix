@@ -53,7 +53,7 @@
     "dotenv": "^10.0.0"
   },
   "bin": {
-    "prismix": "bin/run"
+    "prismix": "./bin/run"
   },
   "oclif": {
     "bin": "prisma-merge"
