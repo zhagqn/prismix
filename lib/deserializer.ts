@@ -60,9 +60,8 @@ function renderAttributes(field: DMMF.Field): string {
   // handle relation syntax
   if (relationFromFields && kind === 'object') {
     return relationFromFields.length > 0
-      ? `@relation(name: "${relationName}", fields: [${relationFromFields}], references: [${relationToFields}]${
-          relationOnDelete ? `, onDelete: ${relationOnDelete}` : ''
-        }${relationOnUpdate ? `, onUpdate: ${relationOnUpdate}` : ''})`
+      ? `@relation(name: "${relationName}", fields: [${relationFromFields}], references: [${relationToFields}]${relationOnDelete ? `, onDelete: ${relationOnDelete}` : ''
+      }${relationOnUpdate ? `, onUpdate: ${relationOnUpdate}` : ''})`
       : `@relation(name: "${relationName}")`;
   }
   return '';
@@ -77,8 +76,8 @@ function renderDocumentation(documentation?: string, tab?: boolean) {
   return documentationLines.length == 1
     ? `/// ${documentationLines[0]}\n${tab ? '\t' : ''}`
     : documentationLines
-        .map((text, idx) => (idx == 0 ? `/// ${text}` : `\t/// ${text}`))
-        .join('\n') + (tab ? '\n\t' : '\n');
+      .map((text, idx) => (idx == 0 ? `/// ${text}` : `\t/// ${text}`))
+      .join('\n') + (tab ? '\n\t' : '\n');
 }
 
 // render all fields present on a model
@@ -87,14 +86,12 @@ function renderModelFields(fields: DMMF.Field[]): string[] {
     const { name, kind, type, documentation, isRequired, isList } = field;
 
     if (kind == 'scalar')
-      return `${renderDocumentation(documentation, true)}${name} ${type}${
-        isList ? '[]' : isRequired ? '' : '?'
-      } ${renderAttributes(field)}`;
+      return `${renderDocumentation(documentation, true)}${name} ${type}${isList ? '[]' : isRequired ? '' : '?'
+        } ${renderAttributes(field)}`;
 
     if (kind == 'object' || kind == 'enum')
-      return `${renderDocumentation(documentation, true)}${name} ${type}${
-        isList ? '[]' : isRequired ? '' : '?'
-      } ${renderAttributes(field)}`;
+      return `${renderDocumentation(documentation, true)}${name} ${type}${isList ? '[]' : isRequired ? '' : '?'
+        } ${renderAttributes(field)}`;
 
     throw new Error(`Prismix: Unsupported field kind "${kind}"`);
   });
@@ -108,8 +105,8 @@ function renderIdFieldsOrPrimaryKey(idFields: string[]): string {
 function renderUniqueIndexes(uniqueIndexes: Model['uniqueIndexes']): string[] {
   return uniqueIndexes.length > 0
     ? uniqueIndexes.map(
-        ({ name, fields }) => `@@unique([${fields.join(', ')}]${name ? `, name: "${name}"` : ''})`
-      )
+      ({ name, fields }) => `@@unique([${fields.join(', ')}]${name ? `, name: "${name}"` : ''})`
+    )
     : [];
 }
 function renderDbName(dbName: string | null): string {
@@ -192,7 +189,7 @@ export async function deserializeGenerators(generators: GeneratorConfig[]) {
   return generators.map((generator) => deserializeGenerator(generator)).join('\n');
 }
 export async function deserializeEnums(enums: DMMF.DatamodelEnum[]) {
-  return enums.map((each) => deserializeEnum(each)).join('\n');
+  return Array.from(new Set(enums.map((each) => deserializeEnum(each)))).join('\n');
 }
 
 // Adapted from https://github.com/IBM/prisma-schema-transformer/blob/53a173185b/src/deserializer.ts
